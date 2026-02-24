@@ -1,0 +1,54 @@
+name: Creating the cloud resources
+
+on:
+  push
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.versioning.outputs.version }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compute versions
+      id: versioning
+      run: |
+        version=$(git rev-parse --short HEAD)
+        echo "version=$version" >> $GITHUB_OUTPUT
+        echo "## 🔖 New version '$version'" >> $GITHUB_STEP_SUMMARY
+
+  infra-as-code:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [versioning]
+    defaults:
+      run:
+        working-directory: pulumi
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3.5.0
+      with:
+        node-version: "22"
+        node-version-file: pulumi/package.json
+        cache-dependency-path: pulumi/package-lock.json
+
+    - run: |
+        npm install
+
+        export PULUMI_CONFIG_PASSPHRASE=
+        # echo "${{ secrets.PULUMI_OCI_API_KEY }}"  > ./oci_api_key
+        # chmod 400 ./oci_api_key
+
+        pwd
+        ls -la
+
+        curl -fsSL https://get.pulumi.com | sh
+
+        pulumi login --local
+        pulumi stack init dev
+        # echo "${{ secrets.PULUMI_STACK_CONFIG }}" > ./Pulumi.dev.yaml
+
+        export VERSION=${{needs.versioning.outputs.version}}
+        # pulumi preview
