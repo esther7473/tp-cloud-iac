@@ -23,10 +23,6 @@ const compartment = new oci.identity.Compartment(compartmentName, {
 	freeformTags:tags
 })
 
-
-
-exports.compartmentId = compartment.id
-
 const subnetName = [env,"pulumi", "subnet"].join("-")
 
 const subnet = new oci.core.Subnet(subnetName, {
@@ -36,4 +32,5 @@ const subnet = new oci.core.Subnet(subnetName, {
     definedTags: tags,
     cidrBlock: "10.0.1.0/24",
 });
+exports.compartmentId = compartment.id
 exports.subnetId = subnet.id
