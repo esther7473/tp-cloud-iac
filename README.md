@@ -32,3 +32,5 @@ PULUMI_STACK_CONFIG: the dev stack yaml file
 ```
 
 They will be consummed by the CI/CD
+
+passphrase : anitchey

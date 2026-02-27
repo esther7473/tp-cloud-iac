@@ -1,0 +1,8 @@
+encryptionsalt: v1:VFaVXFa+zl0=:v1:js3jQuCmIlejYVAn:aWAxvGm8FRvkflP6rpw3yrX20g7GwA==
+config:
+  oci:tenancyOcid: ocid1.tenancy.oc1..aaaaaaaa7lb5ygv537qaddy54bb3wsizr34kwsndrd2vwsus4xawvnf4bh5q
+  oci:userOcid: ocid1.user.oc1..aaaaaaaajpij7q3xibzgxgoo736rzjpzis26h2tsb6mozxrjm5pn4b7cbtxq
+  oci:privateKeyPath: oci_api_key
+  oci:fingerprint: 28:af:ef:c8:cc:3b:02:28:f1:73:44:0c:96:9d:b0:57
+  oci:region: eu-marseille-1
+
