@@ -27,25 +27,13 @@ const compartment = new oci.identity.Compartment(compartmentName, {
 
 exports.compartmentId = compartment.id
 
-// const esther_pulumi_subnet = new oci.core.Subnet("esther_pulumi_subnet", {
-//     compartmentId: "string",
-//     vcnId: "string",
-//     ipv4cidrBlocks: ["string"],
-//     ipv6cidrBlock: "string",
-//     dhcpOptionsId: "string",
-//     displayName: "string",
-//     dnsLabel: "string",
-//     freeformTags: {
-//         string: "string",
-//     },
-//     availabilityDomain: "string",
-//     definedTags: {
-//         string: "string",
-//     },
-//     ipv6cidrBlocks: ["string"],
-//     prohibitInternetIngress: false,
-//     prohibitPublicIpOnVnic: false,
-//     routeTableId: "string",
-//     securityListIds: ["string"],
-//     cidrBlock: "string",
-// });
+const subnetName = [env,"pulumi", "subnet"].join("-")
+
+const subnet = new oci.core.Subnet(subnetName, {
+    compartmentId: "ocid1.compartment.oc1..aaaaaaaaobaun32a3g33zrxxfkyzd45yjcyitytupn2vkper5waxhyk55ppa",
+    vcnId: "ocid1.vcn.oc1.eu-marseille-1.amaaaaaawk6crziatv2ifcvygfakkzbshyjr53u5uhd25ge2tkhr35yzbf5q",
+    displayName: "first-pulumi-subnet",
+    definedTags: tags,
+    cidrBlock: "10.0.1.0/24",
+});
+exports.subnetId = subnet.id
