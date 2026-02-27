@@ -29,7 +29,7 @@ const subnet = new oci.core.Subnet(subnetName, {
     compartmentId: "ocid1.compartment.oc1..aaaaaaaaobaun32a3g33zrxxfkyzd45yjcyitytupn2vkper5waxhyk55ppa",
     vcnId: "ocid1.vcn.oc1.eu-marseille-1.amaaaaaawk6crziatv2ifcvygfakkzbshyjr53u5uhd25ge2tkhr35yzbf5q",
     displayName: "first-pulumi-subnet",
-    definedTags: tags,
+    // definedTags: tags,
     cidrBlock: "10.0.1.0/24",
 });
 exports.compartmentId = compartment.id
