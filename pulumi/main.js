@@ -12,7 +12,7 @@ const compartmentName = [env,"pulumi", "tp"].join("-")
 
 
 const tags = {
-    "created-by": "pulumi",
+    "created_by": "pulumi",
     "environment": env
 };
  
@@ -34,33 +34,17 @@ const subnet = new oci.core.Subnet(subnetName, {
 });
 
 
-const InstanceName = [env,"pulumi", "instance"].join("-")
+// const InstanceName = [env,"pulumi", "instance"].join("-")
 
 // const instanceResource = new oci.core.Instance(InstanceName, {
-//     // availabilityDomain: "string",
 //     compartmentId: "ocid1.compartment.oc1..aaaaaaaaobaun32a3g33zrxxfkyzd45yjcyitytupn2vkper5waxhyk55ppa",
 //     capacityReservationId: "string",
 //     createVnicDetails: {
 //         assignIpv6ip: false,
 //         assignPrivateDnsRecord: false,
 //         assignPublicIp: "string",
-//         definedTags: {
-//             string: "string",
-//         },
-//         displayName: "string",
-//         freeformTags: {
-//             string: "string",
-//         },
-//         hostnameLabel: "string",
-//         ipv6addressIpv6subnetCidrPairDetails: [{
-//             ipv6address: "string",
-//             ipv6subnetCidr: "string",
-//         }],
-//         nsgIds: ["string"],
-//         privateIp: "string",
-//         securityAttributes: {
-//             string: "string",
-//         },
+//         definedTags: tags,
+
 //         skipSourceDestCheck: false,
 //         subnetCidr: "string",
 //         subnetId: "string",
@@ -70,39 +54,7 @@ const InstanceName = [env,"pulumi", "instance"].join("-")
 //     definedTags: {
 //         string: "string",
 //     },
-//     displayName: "string",
-//     extendedMetadata: {
-//         string: "string",
-//     },
-//     faultDomain: "string",
-//     freeformTags: {
-//         string: "string",
-//     },
-//     instanceConfigurationId: "string",
-//     ipxeScript: "string",
-//     launchVolumeAttachments: [{
-//         type: "string",
-//         device: "string",
-//         displayName: "string",
-//         encryptionInTransitType: "string",
-//         isAgentAutoIscsiLoginEnabled: false,
-//         isPvEncryptionInTransitEnabled: false,
-//         isReadOnly: false,
-//         isShareable: false,
-//         launchCreateVolumeDetails: {
-//             sizeInGbs: "string",
-//             volumeCreationType: "string",
-//             compartmentId: "string",
-//             displayName: "string",
-//             kmsKeyId: "string",
-//             vpusPerGb: "string",
-//         },
-//         useChap: false,
-//         volumeId: "string",
-//     }],
-//     metadata: {
-//         string: "string",
-//     },
+
 
 //     shape: "string",
 //     shapeConfig: {
@@ -147,10 +99,50 @@ const bucketNamespace = [env,"pulumi", "bucket","ns"].join("-")
 const bucket = new oci.objectstorage.Bucket("BucketName", {
     compartmentId: compartment.id,
     name: BucketName,
-    namespace: bucketNamespace,
+    namespace: "axmnd65wtqj5",
     freeformTags: tags,
 });
+// const autonomousDatabaseName = [env,"pulumi", "autonomousDatabase"].join("-")
+// const autonomousDatabase = new oci.database.AutonomousDatabase(autonomousDatabaseName, {
+//     compartmentId: compartment.id,
+//     dbName: autonomousDatabaseName,
+//     namespace: "axmnd65wtqj5",
+//     freeformTags: tags,
+// })
+
+const vcnName = [env,"pulumi", "vcn"].join("-")
+const vcn = new oci.core.Vcn(vcnName, {
+    compartmentId: compartment.id, 
+    cidrBlock: "10.2.0.0/16",
+    definedTags: tags,
+});
+
+// const routeTableName = [env,"pulumi", "routeTable"].join("-")
+// const routeTable = new oci.core.RouteTable(routeTableName, {
+//     compartmentId: compartment.id,
+//     vcnId: vcn.id,
+//     definedTags: tags,
+//     routeRules: [{
+//         networkEntityId: internetGateway.id,
+//         destination: "0.0.0.0/0",
+//         destinationType: CIDR_BLOCK,
+//     }],
+// });
+
+const internetGatewayName = [env,"pulumi", "internetGateway"].join("-")
+const internetGateway = new oci.core.InternetGateway(internetGatewayName, {
+    compartmentId: compartment.id,
+    vcnId: vcn.id,
+    enabled: true,
+    definedTags: tags,
+    // routeTableId: routeTable.id,
+});
+
+
 
 exports.compartmentId = compartment.id
 exports.subnetId = subnet.id
 exports.bucketId = bucket.id
+// exports.autonomousDatabaseId = autonomousDatabase.id
+// exports.routeTableId = routeTable.id
+exports.internetGatewayId = internetGateway.id
